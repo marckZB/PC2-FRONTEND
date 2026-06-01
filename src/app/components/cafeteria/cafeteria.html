@@ -8,14 +8,27 @@
         <label class="form-label fw-bold">Nombre del Estudiante:</label>
         <input [(ngModel)]="nuevoPedido.estudiante" class="form-control" placeholder="Ingrese su nombre">
       </div>
+
       <div class="col-md-6 mb-3">
+        <label class="form-label fw-bold">Categoría:</label>
+        <select [(ngModel)]="nuevoPedido.categoria" class="form-select">
+          <option value="" disabled selected>Seleccione una categoría</option>
+          <option value="Bebidas">Bebidas</option>
+          <option value="Snacks">Snacks</option>
+          <option value="Almuerzos">Almuerzos</option>
+        </select>
+      </div>
+
+      <div class="col-md-12 mb-3">
         <label class="form-label fw-bold">Producto:</label>
         <select [(ngModel)]="nuevoPedido.productoId" class="form-select">
+          <option value="" disabled selected>Seleccione un producto</option>
           @for (prod of productos; track prod.id) {
             <option [value]="prod.id">{{ prod.nombre }} - {{ prod.precio | currency:'PEN':'S/.' }}</option>
           }
         </select>
       </div>
+
       <div class="col-md-3 mb-3">
         <label class="form-label fw-bold">Cantidad:</label>
         <input type="number" [(ngModel)]="nuevoPedido.cantidad" class="form-control" min="1">
@@ -27,27 +40,5 @@
     </div>
     <button class="btn btn-success w-100 fw-bold" (click)="registrar()">Confirmar Pedido</button>
   </div>
-
-  <h4 class="mb-3">Productos Disponibles</h4>
-  <div class="row">
-    @for (prod of productos; track prod.id) {
-      <div class="col-md-4 mb-4">
-        <div class="card h-100 shadow-sm" [class.border-danger]="prod.stock === 0" [class.border-success]="prod.stock > 0">
-          <div class="card-body">
-            <h5 class="card-title fw-bold">{{ prod.nombre }}</h5>
-            <p class="card-text text-muted small">Categoría: {{ prod.categoria }}</p>
-            <p class="card-text fs-5 text-primary">{{ prod.precio | currency:'PEN':'S/.' }}</p>
-            
-            <div class="d-flex justify-content-between align-items-center mt-3">
-              <span class="badge" [class.bg-danger]="prod.stock === 0" [class.bg-success]="prod.stock > 0">
-                Stock: {{ prod.stock > 0 ? prod.stock : 'Agotado' }}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    } @empty {
-      <div class="col-12"><div class="alert alert-info text-center">Cargando catálogo...</div></div>
-    }
+  
   </div>
-</div>

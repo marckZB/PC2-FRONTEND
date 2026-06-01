@@ -16,10 +16,12 @@ export class MatriculasComponent implements OnInit {
   
   cursos: Curso[] = [];
   
+  // Hemos añadido 'categoria' aquí para que el [(ngModel)] funcione
   nuevaMatricula = {
     estudiante: '',
     cursoId: null as number | null,
-    fecha: new Date().toISOString().split('T')[0] // Fecha actual
+    categoria: '', 
+    fecha: new Date().toISOString().split('T')[0]
   };
 
   ngOnInit() {
@@ -30,8 +32,9 @@ export class MatriculasComponent implements OnInit {
   }
 
   matricular() {
-    if (!this.nuevaMatricula.estudiante || !this.nuevaMatricula.cursoId) {
-      alert('⚠️ Por favor completa el nombre del estudiante y selecciona un curso.');
+    // Validamos que todos los campos, incluida la categoría, estén llenos
+    if (!this.nuevaMatricula.estudiante || !this.nuevaMatricula.cursoId || !this.nuevaMatricula.categoria) {
+      alert('⚠️ Por favor completa el nombre del estudiante, la categoría y selecciona un curso.');
       return;
     }
 
@@ -48,6 +51,7 @@ export class MatriculasComponent implements OnInit {
     this.nuevaMatricula = {
       estudiante: '',
       cursoId: null,
+      categoria: '',
       fecha: new Date().toISOString().split('T')[0]
     };
   }

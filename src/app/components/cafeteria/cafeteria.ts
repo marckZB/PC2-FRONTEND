@@ -15,10 +15,11 @@ export class CafeteriaComponent implements OnInit {
 
   productos: Producto[] = [];
 
-  // Estado del formulario
+  // CORRECCIÓN: Definimos la propiedad 'categoria' aquí
   nuevoPedido = {
     estudiante: '',
     productoId: null as number | null,
+    categoria: '', 
     cantidad: 1,
     observacion: ''
   };
@@ -35,8 +36,9 @@ export class CafeteriaComponent implements OnInit {
   }
 
   registrar() {
-    if (!this.nuevoPedido.estudiante || !this.nuevoPedido.productoId || this.nuevoPedido.cantidad <= 0) {
-      alert('⚠️ Por favor completa los campos: Estudiante, Producto y Cantidad.');
+    // CORRECCIÓN: Validamos que también se haya seleccionado una categoría
+    if (!this.nuevoPedido.estudiante || !this.nuevoPedido.categoria || !this.nuevoPedido.productoId || this.nuevoPedido.cantidad <= 0) {
+      alert('⚠️ Por favor completa los campos: Estudiante, Categoría, Producto y Cantidad.');
       return;
     }
 
@@ -53,9 +55,11 @@ export class CafeteriaComponent implements OnInit {
   }
 
   private resetFormulario() {
+    // CORRECCIÓN: Reiniciamos la categoría como vacío
     this.nuevoPedido = {
       estudiante: '',
       productoId: null,
+      categoria: '',
       cantidad: 1,
       observacion: ''
     };
