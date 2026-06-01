@@ -1,0 +1,62 @@
+<div class="container mt-5">
+    <h2 class="mb-4 text-primary fw-bold">Gestión de Incidencias UTP</h2>
+
+    <div class="card p-4 mb-4 shadow-sm border-warning">
+        <h5 class="mb-3">Reportar Nueva Incidencia</h5>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Título:</label>
+                <input [(ngModel)]="nuevaIncidencia.titulo" class="form-control" placeholder="Ej: Falla en proyector">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Categoría:</label>
+                <select [(ngModel)]="nuevaIncidencia.categoria" class="form-select">
+                    <option value="Infraestructura">Infraestructura</option>
+                    <option value="Tecnología">Tecnología</option>
+                    <option value="Servicios">Servicios</option>
+                </select>
+            </div>
+            <div class="col-md-12 mb-3">
+                <label class="form-label fw-bold">Descripción:</label>
+                <textarea [(ngModel)]="nuevaIncidencia.descripcion" class="form-control" rows="2" placeholder="Detalle el problema..."></textarea>
+            </div>
+        </div>
+        <button class="btn btn-warning w-100 fw-bold" (click)="registrar()">+ Reportar Incidencia</button>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="row">
+        @for (inc of incidencias; track inc.id) {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm border-start border-4" 
+                     [class.border-warning]="inc.estado === 'Pendiente'"
+                     [class.border-primary]="inc.estado === 'En proceso'"
+                     [class.border-success]="inc.estado === 'Atendido'">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">{{ inc.titulo }}</h5>
+                        <p class="text-muted small">{{ inc.categoria }}</p>
+                        <p class="card-text">{{ inc.descripcion }}</p>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="badge" 
+                                  [class.bg-warning]="inc.estado === 'Pendiente'"
+                                  [class.bg-primary]="inc.estado === 'En proceso'"
+                                  [class.bg-success]="inc.estado === 'Atendido'">
+                                {{ inc.estado }}
+                            </span>
+                            
+                            <button class="btn btn-sm btn-outline-secondary" (click)="actualizarEstado(inc)">
+                                Actualizar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        } @empty {
+            <div class="col-12">
+                <div class="alert alert-info text-center">No hay incidencias registradas.</div>
+            </div>
+        }
+    </div>
+</div>

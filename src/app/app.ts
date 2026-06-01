@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import { TareasComponent } from './components/tareas/tareas'; // <-- Ruta corta sin .component
+// 1. Importamos los módulos de enrutamiento en lugar de componentes específicos
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [TareasComponent],
-  templateUrl: './app.html', // <-- Ruta corregida sin .component
-  styleUrl: './app.css'      // <-- Ruta corregida sin .component
+  // 2. Aquí es donde agregamos las herramientas de navegación
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  templateUrl: './app.html',
+  styleUrl: './app.css'
 })
 export class AppComponent {
   title = 'PC2-FRONTEND';

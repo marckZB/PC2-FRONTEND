@@ -1,0 +1,53 @@
+<div class="container mt-5">
+  <h2 class="mb-4 text-primary fw-bold">Cafetería UTP - Pedidos</h2>
+
+  <div class="card p-4 mb-5 shadow-sm border-success">
+    <h5 class="mb-3 text-success">Registrar nuevo pedido</h5>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label fw-bold">Nombre del Estudiante:</label>
+        <input [(ngModel)]="nuevoPedido.estudiante" class="form-control" placeholder="Ingrese su nombre">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label fw-bold">Producto:</label>
+        <select [(ngModel)]="nuevoPedido.productoId" class="form-select">
+          @for (prod of productos; track prod.id) {
+            <option [value]="prod.id">{{ prod.nombre }} - {{ prod.precio | currency:'PEN':'S/.' }}</option>
+          }
+        </select>
+      </div>
+      <div class="col-md-3 mb-3">
+        <label class="form-label fw-bold">Cantidad:</label>
+        <input type="number" [(ngModel)]="nuevoPedido.cantidad" class="form-control" min="1">
+      </div>
+      <div class="col-md-9 mb-3">
+        <label class="form-label fw-bold">Observación:</label>
+        <input [(ngModel)]="nuevoPedido.observacion" class="form-control" placeholder="Ej: Sin azúcar, poco hielo...">
+      </div>
+    </div>
+    <button class="btn btn-success w-100 fw-bold" (click)="registrar()">Confirmar Pedido</button>
+  </div>
+
+  <h4 class="mb-3">Productos Disponibles</h4>
+  <div class="row">
+    @for (prod of productos; track prod.id) {
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm" [class.border-danger]="prod.stock === 0" [class.border-success]="prod.stock > 0">
+          <div class="card-body">
+            <h5 class="card-title fw-bold">{{ prod.nombre }}</h5>
+            <p class="card-text text-muted small">Categoría: {{ prod.categoria }}</p>
+            <p class="card-text fs-5 text-primary">{{ prod.precio | currency:'PEN':'S/.' }}</p>
+            
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <span class="badge" [class.bg-danger]="prod.stock === 0" [class.bg-success]="prod.stock > 0">
+                Stock: {{ prod.stock > 0 ? prod.stock : 'Agotado' }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    } @empty {
+      <div class="col-12"><div class="alert alert-info text-center">Cargando catálogo...</div></div>
+    }
+  </div>
+</div>

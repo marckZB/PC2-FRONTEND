@@ -1,0 +1,46 @@
+<div class="container mt-5">
+    <h2 class="mb-4 text-primary fw-bold">Gestión de Matrículas UTP</h2>
+
+    <div class="card p-4 mb-4 shadow-sm border-primary">
+        <h5 class="mb-3">Nueva Matrícula</h5>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Estudiante:</label>
+                <input [(ngModel)]="nuevaMatricula.estudiante" class="form-control" placeholder="Ej: Juan Pérez">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Curso:</label>
+                <select [(ngModel)]="nuevaMatricula.cursoId" class="form-select">
+                    <option [ngValue]="null" disabled>Seleccione un curso...</option>
+                    @for (curso of cursos; track curso.id) {
+                        <option [value]="curso.id">{{ curso.nombre }} ({{ curso.creditos }} créditos)</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <button class="btn btn-primary w-100 fw-bold" (click)="matricular()">🎓 Registrar Matrícula</button>
+    </div>
+
+    <hr class="my-4">
+
+    <h4 class="mb-3">Cursos Disponibles</h4>
+    <div class="row">
+        @for (curso of cursos; track curso.id) {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm border-start border-4 border-info">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">{{ curso.nombre }}</h5>
+                        <p class="card-text text-secondary">Créditos: {{ curso.creditos }}</p>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="badge bg-info text-dark">Disponible</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        } @empty {
+            <div class="col-12">
+                <div class="alert alert-warning text-center">No hay cursos disponibles para matrícula.</div>
+            </div>
+        }
+    </div>
+</div>
