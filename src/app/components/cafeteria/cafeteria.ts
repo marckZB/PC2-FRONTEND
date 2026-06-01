@@ -1,6 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CafeteriaService } from '../../services/cafeteria.service';
-import { Producto } from '../../models/productos.interface';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -10,56 +9,45 @@ import { CommonModule } from '@angular/common';
   imports: [FormsModule, CommonModule],
   templateUrl: './cafeteria.html'
 })
-export class CafeteriaComponent implements OnInit {
+export class CafeteriaComponent {
+  // Inyección del servicio
   private cafeteriaService = inject(CafeteriaService);
 
-  productos: Producto[] = [];
-
-  // CORRECCIÓN: Definimos la propiedad 'categoria' aquí
+  // Modelo del formulario
+  // productoId ahora guarda el string (Bebidas, Snacks, Almuerzos)
   nuevoPedido = {
     estudiante: '',
-    productoId: null as number | null,
-    categoria: '', 
+    productoId: '', 
     cantidad: 1,
     observacion: ''
   };
 
-  ngOnInit() {
-    this.listarProductos();
-  }
-
-  listarProductos() {
-    this.cafeteriaService.obtenerProductos().subscribe({
-      next: (res) => this.productos = res,
-      error: (err) => console.error('Error al listar:', err)
-    });
-  }
-
+  // Método para registrar el pedido
   registrar() {
-    // CORRECCIÓN: Validamos que también se haya seleccionado una categoría
-    if (!this.nuevoPedido.estudiante || !this.nuevoPedido.categoria || !this.nuevoPedido.productoId || this.nuevoPedido.cantidad <= 0) {
-      alert('⚠️ Por favor completa los campos: Estudiante, Categoría, Producto y Cantidad.');
+    // Validación básica de campos
+    if (!this.nuevoPedido.estudiante || !this.nuevoPedido.productoId || this.nuevoPedido.cantidad <= 0) {
+      alert('⚠️ Por favor completa el Estudiante, la Categoría y la Cantidad.');
       return;
     }
 
+    // Llamada al servicio
     this.cafeteriaService.crearPedido(this.nuevoPedido).subscribe({
-      next: () => {
+      next: (res) => {
         alert('✅ Pedido registrado con éxito');
         this.resetFormulario();
       },
       error: (err) => {
         console.error('Error al registrar:', err);
-        alert('❌ Error al registrar el pedido.');
+        alert('❌ Ocurrió un error al registrar el pedido. Verifica tu conexión.');
       }
     });
   }
 
+  // Limpiar formulario tras el éxito
   private resetFormulario() {
-    // CORRECCIÓN: Reiniciamos la categoría como vacío
     this.nuevoPedido = {
       estudiante: '',
-      productoId: null,
-      categoria: '',
+      productoId: '',
       cantidad: 1,
       observacion: ''
     };

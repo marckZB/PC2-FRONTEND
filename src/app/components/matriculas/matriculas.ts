@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { MatriculasService } from '../../services/matriculas.service';
-import { Curso } from '../../models/matriculas.interface';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -8,33 +7,33 @@ import { CommonModule } from '@angular/common';
   selector: 'app-matriculas',
   standalone: true,
   imports: [FormsModule, CommonModule],
-  templateUrl: './matriculas.html',
-  styleUrl: './matriculas.css'
+  templateUrl: './matriculas.html'
 })
 export class MatriculasComponent implements OnInit {
   private matService = inject(MatriculasService);
   
-  cursos: Curso[] = [];
+  matriculas: any[] = []; // Lista para mostrar abajo
   
-  // Hemos añadido 'categoria' aquí para que el [(ngModel)] funcione
   nuevaMatricula = {
     estudiante: '',
-    cursoId: null as number | null,
-    categoria: '', 
+    curso: '',
     fecha: new Date().toISOString().split('T')[0]
   };
 
   ngOnInit() {
-    this.matService.obtenerCursos().subscribe({
-      next: (res) => this.cursos = res,
-      error: (err) => console.error('Error al cargar cursos:', err)
+    this.cargarMatriculas();
+  }
+
+  cargarMatriculas() {
+    this.matService.obtenerMatriculas().subscribe({
+      next: (res) => this.matriculas = res,
+      error: (err) => console.error('Error al cargar:', err)
     });
   }
 
   matricular() {
-    // Validamos que todos los campos, incluida la categoría, estén llenos
-    if (!this.nuevaMatricula.estudiante || !this.nuevaMatricula.cursoId || !this.nuevaMatricula.categoria) {
-      alert('⚠️ Por favor completa el nombre del estudiante, la categoría y selecciona un curso.');
+    if (!this.nuevaMatricula.estudiante || !this.nuevaMatricula.curso) {
+      alert('⚠️ Por favor completa el estudiante y selecciona un curso.');
       return;
     }
 
@@ -42,16 +41,16 @@ export class MatriculasComponent implements OnInit {
       next: () => {
         alert('🎓 ¡Matrícula registrada exitosamente!');
         this.resetFormulario();
+        this.cargarMatriculas(); // Recargar la lista
       },
-      error: (err) => console.error('Error al matricular:', err)
+      error: (err) => console.error('Error:', err)
     });
   }
 
   private resetFormulario() {
     this.nuevaMatricula = {
       estudiante: '',
-      cursoId: null,
-      categoria: '',
+      curso: '',
       fecha: new Date().toISOString().split('T')[0]
     };
   }

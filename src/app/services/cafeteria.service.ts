@@ -8,15 +8,16 @@ import { Producto } from '../models/productos.interface';
 })
 export class CafeteriaService {
   private http = inject(HttpClient);
-  // Definimos la base una sola vez
-  private baseUrl = 'https://pc2-backend-ohda.onrender.com/api/productos';
+  
+  // CORRECCIÓN: La base debe terminar en /api
+  private baseUrl = 'https://pc2-backend-ohda.onrender.com/api';
 
-  // Obtener productos usando la base
+  // Obtener productos: URL resultante -> .../api/productos
   obtenerProductos(): Observable<Producto[]> {
     return this.http.get<Producto[]>(`${this.baseUrl}/productos`);
   }
 
-  // Registrar pedido usando la base
+  // Registrar pedido: URL resultante -> .../api/pedidos
   crearPedido(pedido: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/pedidos`, pedido);
   }

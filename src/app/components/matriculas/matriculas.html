@@ -2,30 +2,19 @@
     <h2 class="mb-4 text-primary fw-bold">Gestión de Matrículas UTP</h2>
 
     <div class="card p-4 mb-4 shadow-sm border-primary">
-        <h5 class="mb-3">Nueva Matrícula</h5>
+        <h5 class="mb-3 text-primary">Nueva Matrícula</h5>
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label class="form-label fw-bold">Estudiante:</label>
                 <input [(ngModel)]="nuevaMatricula.estudiante" class="form-control" placeholder="Ej: Juan Pérez">
             </div>
-
             <div class="col-md-6 mb-3">
-                <label class="form-label fw-bold">Categoría:</label>
-                <select [(ngModel)]="nuevaMatricula.categoria" class="form-select">
-                    <option value="" disabled selected>Seleccione una categoría</option>
+                <label class="form-label fw-bold">Curso:</label>
+                <select [(ngModel)]="nuevaMatricula.curso" class="form-select">
+                    <option value="" disabled selected>Seleccione un curso...</option>
                     <option value="Ingeniería">Ingeniería</option>
                     <option value="Derecho">Derecho</option>
                     <option value="Ciencias">Ciencias</option>
-                </select>
-            </div>
-
-            <div class="col-md-12 mb-3">
-                <label class="form-label fw-bold">Curso:</label>
-                <select [(ngModel)]="nuevaMatricula.cursoId" class="form-select">
-                    <option [ngValue]="null" disabled>Seleccione un curso...</option>
-                    @for (curso of cursos; track curso.id) {
-                        <option [value]="curso.id">{{ curso.nombre }} ({{ curso.creditos }} créditos)</option>
-                    }
                 </select>
             </div>
         </div>
@@ -33,4 +22,22 @@
     </div>
 
     <hr class="my-4">
+
+    <div class="row">
+        @for (mat of matriculas; track mat.id) {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm border-start border-4 border-primary">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">{{ mat.estudiante }}</h5>
+                        <p class="text-muted small">{{ mat.curso }}</p>
+                        <p class="card-text">Fecha: {{ mat.fecha }}</p>
+                    </div>
+                </div>
+            </div>
+        } @empty {
+            <div class="col-12">
+                <div class="alert alert-info text-center">No hay matrículas registradas.</div>
+            </div>
+        }
     </div>
+</div>

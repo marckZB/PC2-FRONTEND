@@ -11,21 +11,11 @@
 
       <div class="col-md-6 mb-3">
         <label class="form-label fw-bold">Categoría:</label>
-        <select [(ngModel)]="nuevoPedido.categoria" class="form-select">
-          <option value="" disabled selected>Seleccione una categoría</option>
+        <select [(ngModel)]="nuevoPedido.productoId" class="form-select">
+          <option value="" disabled selected>Seleccione una categoría...</option>
           <option value="Bebidas">Bebidas</option>
           <option value="Snacks">Snacks</option>
           <option value="Almuerzos">Almuerzos</option>
-        </select>
-      </div>
-
-      <div class="col-md-12 mb-3">
-        <label class="form-label fw-bold">Producto:</label>
-        <select [(ngModel)]="nuevoPedido.productoId" class="form-select">
-          <option value="" disabled selected>Seleccione un producto</option>
-          @for (prod of productos; track prod.id) {
-            <option [value]="prod.id">{{ prod.nombre }} - {{ prod.precio | currency:'PEN':'S/.' }}</option>
-          }
         </select>
       </div>
 
@@ -33,6 +23,7 @@
         <label class="form-label fw-bold">Cantidad:</label>
         <input type="number" [(ngModel)]="nuevoPedido.cantidad" class="form-control" min="1">
       </div>
+      
       <div class="col-md-9 mb-3">
         <label class="form-label fw-bold">Observación:</label>
         <input [(ngModel)]="nuevoPedido.observacion" class="form-control" placeholder="Ej: Sin azúcar, poco hielo...">
@@ -40,5 +31,4 @@
     </div>
     <button class="btn btn-success w-100 fw-bold" (click)="registrar()">Confirmar Pedido</button>
   </div>
-  
-  </div>
+</div>
