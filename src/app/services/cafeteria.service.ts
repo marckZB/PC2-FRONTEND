@@ -9,7 +9,7 @@ import { Producto } from '../models/productos.interface';
 export class CafeteriaService {
   private http = inject(HttpClient);
   // Definimos la base una sola vez
-  private baseUrl = 'https://pc2-backend-ohda.onrender.com/api';
+  private baseUrl = 'https://pc2-backend-ohda.onrender.com/api/productos';
 
   // Obtener productos usando la base
   obtenerProductos(): Observable<Producto[]> {

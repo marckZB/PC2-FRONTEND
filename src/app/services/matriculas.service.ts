@@ -6,7 +6,7 @@ import { Curso } from '../models/matriculas.interface';
 @Injectable({ providedIn: 'root' })
 export class MatriculasService {
   private http = inject(HttpClient);
-  private baseUrl = 'https://pc2-backend-ohda.onrender.com/api';
+  private baseUrl = 'https://pc2-backend-ohda.onrender.com/api/cursos';
 
   obtenerCursos(): Observable<Curso[]> {
     return this.http.get<Curso[]>(`${this.baseUrl}/cursos`);
