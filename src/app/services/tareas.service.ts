@@ -9,8 +9,7 @@ import { Tarea } from '../models/tareas.interface';
 export class TareasService {
   private http = inject(HttpClient);
   
-  // Aquí pondrás la URL de tu propio Render más adelante. Por ahora una genérica de prueba:
-  private apiUrl = 'https://api-tu-proyecto-propio.onrender.com/api/tareas';
+private apiUrl = 'https://pc2-backend-ohda.onrender.com/api/tareas';
 
   // Obtener todas las tareas
   obtenerTareas(): Observable<Tarea[]> {
